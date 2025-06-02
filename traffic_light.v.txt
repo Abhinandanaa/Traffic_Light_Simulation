@@ -5,15 +5,13 @@ module traffic_light_controller (
     output reg [1:0] ew_light
 );
 
-    // State encoding
-    typedef enum reg [1:0] {
-        NS_GREEN = 2'b00,
-        NS_YELLOW = 2'b01,
-        EW_GREEN = 2'b10,
-        EW_YELLOW = 2'b11
-    } state_t;
+    // State encoding using localparam (instead of typedef enum)
+    localparam NS_GREEN  = 2'b00;
+    localparam NS_YELLOW = 2'b01;
+    localparam EW_GREEN  = 2'b10;
+    localparam EW_YELLOW = 2'b11;
 
-    state_t state, next_state;
+    reg [1:0] state, next_state;
     reg [3:0] timer;
 
     // Clock-driven state update
