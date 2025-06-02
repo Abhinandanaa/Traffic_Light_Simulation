@@ -1,0 +1,32 @@
+`timescale 1ns / 1ps
+
+module testbench;
+
+    reg clk, reset;
+    wire [1:0] ns_light, ew_light;
+
+    traffic_light_controller uut (
+        .clk(clk),
+        .reset(reset),
+        .ns_light(ns_light),
+        .ew_light(ew_light)
+    );
+
+    // Generate clock signal
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk; // 10 ns clock cycle
+    end
+
+    // Stimulus
+    initial begin
+        $monitor("Time=%0d ns | NS Light=%b | EW Light=%b", $time, ns_light, ew_light);
+
+        reset = 1;
+        #10;
+        reset = 0;
+
+        #200 $finish;
+    end
+
+endmodule
